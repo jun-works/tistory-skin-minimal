@@ -973,25 +973,40 @@ html.dark .post-detail-body h2 {
   color: var(--ink);
   margin-top: 36px;
   margin-bottom: 14px;
+  border-left: 3px solid var(--primary);
+  padding-left: 12px;
 }
 
 .post-detail-body ul, .post-detail-body ol {
+  margin-top: 16px;
   margin-bottom: 28px;
   padding-left: 24px;
 }
 
 .post-detail-body li {
-  margin-bottom: 10px;
+  margin-bottom: 12px;
+  line-height: 1.7;
+}
+
+.post-detail-body strong, 
+.post-detail-body b {
+  color: var(--ink);
 }
 
 /* Blockquote */
 .post-detail-body blockquote {
+  background-color: var(--canvas-parchment);
   border-left: 4px solid var(--primary);
-  padding: 8px 0 8px var(--spacing-lg);
-  margin: 32px 0;
+  padding: 16px 20px;
+  border-radius: 0 var(--rounded-md) var(--rounded-md) 0;
+  margin: 28px 0;
   color: var(--ink-muted-80);
-  font-size: 18px;
-  font-style: italic;
+  font-size: 16px;
+  font-style: normal;
+}
+
+html.dark .post-detail-body blockquote {
+  background-color: var(--surface-pearl);
 }
 
 /* Codeblocks */
