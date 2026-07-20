@@ -956,7 +956,13 @@ body.drawer-open {
   letter-spacing: -0.02em;
   color: var(--ink);
   margin-top: 48px;
-  margin-bottom: 18px;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+html.dark .post-detail-body h2 {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
 }
 
 .post-detail-body h3 {
