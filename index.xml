@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<skin>
+  <information>
+    <name>Apple Museum</name>
+    <version>1.0.0</version>
+    <description><![CDATA[Apple의 미니멀리즘 디자인 시스템을 반영한 티스토리 스킨입니다. 고대비 그리드 레이아웃, 섬세한 타이포그래피, 마이크로 인터랙션을 제공합니다.]]></description>
+    <license><![CDATA[MIT License]]></license>
+    <author>
+      <name>Antigravity</name>
+      <homepage>https://github.com/google</homepage>
+      <email></email>
+    </author>
+  </information>
+  <author>
+  </author>
+  <default>
+    <recentEntries>6</recentEntries>
+    <recentComments>5</recentComments>
+    <itemsOnGuestbook>10</itemsOnGuestbook>
+    <tagsInCloud>20</tagsInCloud>
+    <contentWidth>1000</contentWidth>
+  </default>
+  <variables>
+    <variablegroup name="기본 설정">
+      <variable>
+        <name>logoText</name>
+        <label>블로그 로고 텍스트</label>
+        <type>STRING</type>
+        <default>Apple Museum</default>
+      </variable>
+      <variable>
+        <name>accentColor</name>
+        <label>시그니처 포인트 색상</label>
+        <type>COLOR</type>
+        <default>#0066cc</default>
+      </variable>
+    </variablegroup>
+    <variablegroup name="소셜 링크">
+      <variable>
+        <name>githubUrl</name>
+        <label>GitHub URL</label>
+        <type>STRING</type>
+        <default></default>
+      </variable>
+      <variable>
+        <name>instagramUrl</name>
+        <label>Instagram URL</label>
+        <type>STRING</type>
+        <default></default>
+      </variable>
+    </variablegroup>
+  </variables>
+</skin>

@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+  <title>[##_page_title_##]</title>
+  
+  <!-- Inter Font from Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Tistory CSS link (MUST be style.css) -->
+  <link rel="stylesheet" href="./style.css">
+  
+  <!-- Script for Theme Toggle (Avoid Flash of Unstyled Theme) -->
+  <script>
+    (function() {
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+      }
+    })();
+  </script>
+</head>
+<body id="[##_body_id_##]">
+<s_t3>
+  
+  <!-- Global Top Navigation (Apple style) -->
+  <nav class="global-nav">
+    <div class="nav-container">
+      <!-- Logo -->
+      <a href="[##_blog_link_##]" class="nav-logo">
+        <span class="logo-text">[##_title_##]</span>
+      </a>
+      
+      <!-- Nav Links -->
+      <div class="nav-links">
+        <div class="nav-link-item dropdown">
+          <a href="#" class="dropdown-trigger" onclick="return false;">Category</a>
+          <div class="dropdown-menu">
+            [##_category_list_##]
+          </div>
+        </div>
+        <a href="[##_blog_link_##]tag" class="nav-link-item">Tags</a>
+        <a href="[##_blog_link_##]guestbook" class="nav-link-item">Guestbook</a>
+        <s_notice_rep>
+          <!-- Hidden helper to evaluate if notices exist, but typically static link is fine -->
+        </s_notice_rep>
+        <a href="[##_blog_link_##]notice" class="nav-link-item">Notice</a>
+      </div>
+      
+      <!-- Action Icons (Search, Theme, Menu Drawer Toggle) -->
+      <div class="nav-actions">
+        <!-- Search Trigger -->
+        <button type="button" class="nav-action-btn search-trigger" aria-label="검색창 열기">
+          <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+        </button>
+        
+        <!-- Theme Toggle -->
+        <button type="button" class="nav-action-btn theme-toggle" aria-label="다크 모드 전환">
+          <!-- Light Mode Icon (Sun) -->
+          <svg class="sun-icon" viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+          <!-- Dark Mode Icon (Moon) -->
+          <svg class="moon-icon" viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+        </button>
+        
+        <!-- Hamburger Menu -->
+        <button type="button" class="nav-action-btn menu-trigger" aria-label="메뉴 열기">
+          <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="3" y1="12" x2="21" y2="12" class="line-mid"></line>
+            <line x1="3" y1="6" x2="21" y2="6" class="line-top"></line>
+            <line x1="3" y1="18" x2="21" y2="18" class="line-bot"></line>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+
+  <!-- Search Overlay Modal -->
+  <div class="search-overlay">
+    <div class="search-modal">
+      <button type="button" class="search-close-btn" aria-label="검색창 닫기">
+        <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+      <s_search>
+        <div class="search-form-wrap">
+          <input type="text" name="[##_search_name_##]" value="[##_search_text_##]" onkeypress="if (event.keyCode == 13) { [##_search_onclick_submit_##] }" placeholder="Search blog posts..." class="search-input" />
+          <button type="button" onclick="[##_search_onclick_submit_##]" class="search-submit-btn">
+            <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+          </button>
+        </div>
+      </s_search>
+      <div class="search-suggestions">
+        <div class="suggestion-title">Quick Links</div>
+        <div class="suggestion-tags">
+          <a href="[##_blog_link_##]category">All Categories</a>
+          <a href="[##_blog_link_##]tag">Tag Cloud</a>
+          <a href="[##_blog_link_##]notice">Announcements</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide-out Drawer Navigation (Mobile/Tablet) -->
+  <div class="menu-drawer">
+    <div class="drawer-content">
+      <div class="drawer-header">
+        <div class="drawer-title">Navigation</div>
+      </div>
+      <div class="drawer-links">
+        <a href="[##_blog_link_##]" class="drawer-link-item">Home</a>
+        <a href="[##_blog_link_##]notice" class="drawer-link-item">Notice</a>
+        <a href="[##_blog_link_##]tag" class="drawer-link-item">Tags</a>
+        <a href="[##_blog_link_##]guestbook" class="drawer-link-item">Guestbook</a>
+      </div>
+      <div class="drawer-divider"></div>
+      <div class="drawer-section-title">Categories</div>
+      <div class="drawer-categories">
+        [##_category_list_##]
+      </div>
+    </div>
+  </div>
+  <div class="drawer-backdrop"></div>
+
+  <!-- Main Grid Wrapper -->
+  <main class="main-content">
+    
+    <!-- Category, Search, Tag Page Header -->
+    <s_list>
+      <header class="list-page-header">
+        <div class="list-page-meta">Results for</div>
+        <h1 class="list-page-title">"[##_list_conform_##]"</h1>
+        <div class="list-page-count">[##_list_count_##] Articles found</div>
+      </header>
+    </s_list>
+
+    <!-- Tag Cloud Page Header -->
+    <s_tag>
+      <header class="list-page-header">
+        <div class="list-page-meta">Keyword Map</div>
+        <h1 class="list-page-title">Tags</h1>
+      </header>
+      <div class="tag-cloud-container">
+        <s_tag_rep>
+          <a href="[##_tag_link_##]" class="tag-item [##_tag_class_##]">[##_tag_name_##]</a>
+        </s_tag_rep>
+      </div>
+    </s_tag>
+
+    <!-- Post Lists and Detailed Post Views -->
+    <s_article_rep>
+      
+      <!-- 1. INDEX / LIST VIEW (Homepage, Category pages) -->
+      <s_index_article_rep>
+        <!-- The first item on search/category lists can be standard, but we render a grid. -->
+        <!-- In CSS, we will style the first item differently to look like an Apple full-bleed Hero product tile, and subsequent items as sleek grid cards! -->
+        <article class="post-card">
+          <a href="[##_article_rep_link_##]" class="post-card-link">
+            <s_article_rep_thumbnail>
+              <div class="post-card-image-wrap">
+                <img src="[##_article_rep_thumbnail_url_##]" alt="[##_article_rep_title_##]" class="post-card-image" loading="lazy" />
+              </div>
+            </s_article_rep_thumbnail>
+            <div class="post-card-content">
+              <span class="post-card-category">[##_article_rep_category_##]</span>
+              <h2 class="post-card-title">[##_article_rep_title_##]</h2>
+              <p class="post-card-summary">[##_article_rep_summary_##]</p>
+              <div class="post-card-footer">
+                <span class="post-card-date">[##_article_rep_simple_date_##]</span>
+                <span class="post-card-arrow">Read article</span>
+              </div>
+            </div>
+          </a>
+        </article>
+      </s_index_article_rep>
+
+      <!-- 2. PERMALINK / ARTICLE DETAIL VIEW -->
+      <s_permalink_article_rep>
+        <article class="post-detail">
+          
+          <!-- Post Header -->
+          <header class="post-detail-header">
+            <div class="post-detail-category-wrap">
+              <a href="[##_article_rep_category_link_##]" class="post-detail-category">[##_article_rep_category_##]</a>
+            </div>
+            <h1 class="post-detail-title">[##_article_rep_title_##]</h1>
+            <div class="post-detail-meta">
+              <span class="post-detail-date">[##_article_rep_date_##]</span>
+              <span class="post-detail-divider">/</span>
+              <span class="post-detail-author">By [##_article_rep_author_##]</span>
+              <s_ad_div>
+                <span class="post-detail-divider">/</span>
+                <a href="[##_s_ad_m_link_##]" class="post-admin-link">Edit</a>
+              </s_ad_div>
+            </div>
+          </header>
+
+          <!-- Post Content -->
+          <div class="post-detail-body">
+            [##_article_rep_desc_##]
+          </div>
+
+          <!-- Post Tags -->
+          <s_tag_label>
+            <div class="post-detail-tags">
+              <span class="tags-label">Tags:</span>
+              <s_tag_rep>
+                <a href="[##_tag_link_##]" class="post-tag-item">#[##_tag_name_##]</a>
+              </s_tag_rep>
+            </div>
+          </s_tag_label>
+
+          <!-- Post Comments Section -->
+          <section class="post-comments">
+            <h3 class="comments-title">Discussion</h3>
+            <s_rp>
+              [##_comment_group_##]
+            </s_rp>
+          </section>
+
+        </article>
+      </s_permalink_article_rep>
+
+    </s_article_rep>
+
+    <!-- Notice Page Support -->
+    <s_notice_rep>
+      <!-- List View for Notices -->
+      <s_index_article_rep>
+        <article class="post-card notice-card">
+          <a href="[##_notice_rep_link_##]" class="post-card-link">
+            <div class="post-card-content">
+              <span class="post-card-category">Notice</span>
+              <h2 class="post-card-title">[##_notice_rep_title_##]</h2>
+              <p class="post-card-summary">[##_notice_rep_desc_##]</p>
+              <div class="post-card-footer">
+                <span class="post-card-date">[##_notice_rep_simple_date_##]</span>
+                <span class="post-card-arrow">Read Announcement</span>
+              </div>
+            </div>
+          </a>
+        </article>
+      </s_index_article_rep>
+
+      <!-- Detailed View for Notice -->
+      <s_permalink_article_rep>
+        <article class="post-detail notice-detail">
+          <header class="post-detail-header">
+            <div class="post-detail-category-wrap">
+              <span class="post-detail-category">Announcement</span>
+            </div>
+            <h1 class="post-detail-title">[##_notice_rep_title_##]</h1>
+            <div class="post-detail-meta">
+              <span class="post-detail-date">[##_notice_rep_date_##]</span>
+              <span class="post-detail-divider">/</span>
+              <span class="post-detail-author">Administrator</span>
+            </div>
+          </header>
+
+          <div class="post-detail-body">
+            [##_notice_rep_desc_##]
+          </div>
+        </article>
+      </s_permalink_article_rep>
+    </s_notice_rep>
+
+    <!-- Guestbook Page -->
+    <s_guest>
+      <div class="guestbook-container">
+        <header class="list-page-header">
+          <div class="list-page-meta">Visitor Board</div>
+          <h1 class="list-page-title">Guestbook</h1>
+        </header>
+        <div class="guestbook-content">
+          [##_guestbook_group_##]
+        </div>
+      </div>
+    </s_guest>
+
+    <!-- Pagination -->
+    <s_paging>
+      <nav class="pagination" aria-label="Page navigation">
+        <a [##_prev_page_##] class="page-prev [##_no_more_prev_##]" aria-label="이전 페이지">
+          <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="19" y1="12" x2="5" y2="12"></line>
+            <polyline points="12 19 5 12 12 5"></polyline>
+          </svg>
+        </a>
+        <span class="page-numbers">
+          <s_paging_rep>
+            <a [##_link_page_##] class="page-link">[##_page_num_##]</a>
+          </s_paging_rep>
+        </span>
+        <a [##_next_page_##] class="page-next [##_no_more_next_##]" aria-label="다음 페이지">
+          <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+        </a>
+      </nav>
+    </s_paging>
+
+  </main>
+
+  <!-- Footer (Apple style dense links) -->
+  <footer class="global-footer">
+    <div class="footer-container">
+      <div class="footer-grid">
+        <!-- Column 1: Info -->
+        <div class="footer-col">
+          <h3 class="footer-col-title">About</h3>
+          <p class="footer-about-text">[##_desc_##]</p>
+          <div class="footer-social-links">
+            <script>
+              const github = "[##_var_githubUrl_##]";
+              const instagram = "[##_var_instagramUrl_##]";
+              if (github) {
+                document.write(`<a href="${github}" target="_blank" rel="noopener noreferrer" class="social-link">GitHub</a>`);
+              }
+              if (instagram) {
+                document.write(`<a href="${instagram}" target="_blank" rel="noopener noreferrer" class="social-link">Instagram</a>`);
+              }
+            </script>
+          </div>
+        </div>
+        <!-- Column 2: Recent Posts -->
+        <div class="footer-col">
+          <h3 class="footer-col-title">Recent Articles</h3>
+          <ul class="footer-links">
+            <!-- Tistory automatically injects recent posts lists here if configured, or we can use custom sidebar modules. -->
+            <!-- But since we want to be clean, let's render a basic list of recent entries via Tistory's sidebar mechanisms or clean HTML. -->
+            <!-- In Tistory, we can define a sidebar in index.xml, but it's simpler to make this dynamic or list links. -->
+            <!-- Let's check how Tistory handles dynamic recent list in HTML: it's via sidebar. Let's make sure the footer is simple yet gorgeous. -->
+            <!-- We can let the user manage it, or we can use a small JS fetch of RSS if needed, or simply render standard lists. -->
+            <!-- Actually, Tistory's category tree is the most useful link column. -->
+            <li><a href="[##_blog_link_##]category">All Categories</a></li>
+            <li><a href="[##_blog_link_##]tag">Tags Map</a></li>
+            <li><a href="[##_blog_link_##]notice">Announcements</a></li>
+          </ul>
+        </div>
+        <!-- Column 3: Categories -->
+        <div class="footer-col">
+          <h3 class="footer-col-title">Directory</h3>
+          <div class="footer-category-tree">
+            [##_category_list_##]
+          </div>
+        </div>
+      </div>
+      
+      <div class="footer-divider"></div>
+      
+      <div class="footer-bottom">
+        <div class="footer-legal">
+          Copyright © [##_blog_link_##]. All rights reserved.
+        </div>
+        <div class="footer-attribution">
+          Powered by <a href="https://www.tistory.com" target="_blank" rel="noopener">Tistory</a>. Theme designed by <a href="https://github.com/google" target="_blank" rel="noopener">Antigravity</a>.
+        </div>
+      </div>
+    </div>
+  </footer>
+
+</s_t3>
+
+<!-- Tistory Theme / Search / Menu Drawer Interactions -->
+<script>
+  // Theme Toggle
+  const themeToggle = document.querySelector('.theme-toggle');
+  themeToggle.addEventListener('click', () => {
+    const isDark = document.documentElement.classList.toggle('dark');
+    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+  });
+
+  // Search Overlay
+  const searchTrigger = document.querySelector('.search-trigger');
+  const searchOverlay = document.querySelector('.search-overlay');
+  const searchCloseBtn = document.querySelector('.search-close-btn');
+  const searchInput = document.querySelector('.search-overlay .search-input');
+
+  searchTrigger.addEventListener('click', () => {
+    searchOverlay.classList.add('active');
+    setTimeout(() => searchInput.focus(), 200);
+  });
+
+  searchCloseBtn.addEventListener('click', () => {
+    searchOverlay.classList.remove('active');
+  });
+
+  searchOverlay.addEventListener('click', (e) => {
+    if (e.target === searchOverlay) {
+      searchOverlay.classList.remove('active');
+    }
+  });
+
+  // Menu Drawer
+  const menuTrigger = document.querySelector('.menu-trigger');
+  const menuDrawer = document.querySelector('.menu-drawer');
+  const drawerBackdrop = document.querySelector('.drawer-backdrop');
+
+  function toggleDrawer() {
+    menuTrigger.classList.toggle('active');
+    menuDrawer.classList.toggle('active');
+    drawerBackdrop.classList.toggle('active');
+    document.body.classList.toggle('drawer-open');
+  }
+
+  menuTrigger.addEventListener('click', toggleDrawer);
+  drawerBackdrop.addEventListener('click', toggleDrawer);
+
+
+  // Active pagination style check
+  const activePageNum = document.querySelector('.pagination .page-numbers span, .pagination .page-numbers .selected');
+  if (activePageNum) {
+    activePageNum.classList.add('active');
+  }
+</script>
+</body>
+</html>
