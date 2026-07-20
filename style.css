@@ -868,6 +868,7 @@ body.drawer-open {
    ========================================================================== */
 
 .post-detail {
+  position: relative;
   max-width: 1000px;
   margin: 0 auto;
   background-color: var(--canvas);
@@ -1481,4 +1482,222 @@ html.dark .guestbook-container textarea {
   color: var(--ink);
   background-color: var(--canvas-parchment) !important;
   border-color: var(--hairline) !important;
+}
+
+/* ==========================================================================
+   Table of Contents (TOC) Styles
+   ========================================================================== */
+
+/* 1. Desktop Layout (Width >= 1400px) */
+@media (min-width: 1400px) {
+  .post-toc-wrap {
+    position: absolute;
+    top: 180px;
+    left: calc(100% + 40px);
+    width: 250px;
+    height: calc(100% - 300px);
+    pointer-events: none;
+  }
+
+  .post-toc {
+    position: sticky;
+    top: 100px;
+    max-height: calc(100vh - 200px);
+    overflow-y: auto;
+    pointer-events: auto;
+    padding: 8px 0 8px 16px;
+    border-left: 2px solid var(--hairline);
+    transition: border-color 0.3s ease;
+  }
+
+  .toc-toggle-btn {
+    display: none !important;
+  }
+}
+
+/* 2. Floating / Glassmorphism Layout (Width < 1400px) */
+@media (max-width: 1399px) {
+  .post-toc-wrap {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    z-index: 9999;
+  }
+
+  .toc-toggle-btn {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    width: 52px;
+    height: 52px;
+    border-radius: var(--rounded-full);
+    background-color: rgba(255, 255, 255, 0.85);
+    color: var(--ink);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+
+  html.dark .toc-toggle-btn {
+    background-color: rgba(28, 28, 30, 0.85);
+    border-color: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  }
+
+  .toc-toggle-btn:hover {
+    transform: scale(1.06);
+    border-color: var(--primary);
+    color: var(--primary);
+  }
+
+  .toc-toggle-btn.active {
+    background-color: var(--primary);
+    color: var(--on-primary);
+    border-color: var(--primary);
+    transform: rotate(90deg);
+  }
+
+  .post-toc {
+    display: none;
+    position: absolute;
+    bottom: 64px;
+    right: 0;
+    width: 280px;
+    max-height: 420px;
+    background-color: rgba(255, 255, 255, 0.72);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+    border-radius: var(--rounded-lg);
+    padding: 20px;
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    overflow-y: auto;
+    transform-origin: bottom right;
+    animation: tocScaleUp 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  html.dark .post-toc {
+    background-color: rgba(22, 22, 23, 0.72);
+    border-color: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+  }
+
+  .post-toc.active {
+    display: block;
+  }
+}
+
+/* Animations */
+@keyframes tocScaleUp {
+  from {
+    opacity: 0;
+    transform: scale(0.8) translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* 3. Common TOC Elements Styling */
+.post-toc-title {
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--ink-muted-48);
+  margin-bottom: 12px;
+}
+
+.post-toc-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.post-toc-item {
+  margin: 6px 0;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.post-toc-item.level-2 {
+  padding-left: 0;
+}
+
+.post-toc-item.level-3 {
+  padding-left: 12px;
+}
+
+.post-toc-item.level-4 {
+  padding-left: 24px;
+}
+
+.post-toc-link {
+  display: block;
+  color: var(--ink-muted-48);
+  text-decoration: none;
+  transition: all 0.2s ease;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  border-left: 2px solid transparent;
+  padding-left: 8px;
+  margin-left: -10px;
+}
+
+/* Desktop indicator and hover style */
+@media (min-width: 1400px) {
+  .post-toc-link:hover {
+    color: var(--ink);
+    padding-left: 12px;
+  }
+
+  .post-toc-link.active {
+    color: var(--primary);
+    font-weight: 600;
+    border-left-color: var(--primary);
+    padding-left: 12px;
+  }
+}
+
+/* Mobile active and hover style */
+@media (max-width: 1399px) {
+  .post-toc-link {
+    border-left: none;
+    padding-left: 0;
+    margin-left: 0;
+    border-radius: var(--rounded-xs);
+    padding: 6px 8px;
+  }
+  
+  .post-toc-link:hover {
+    color: var(--ink);
+    background-color: var(--divider-soft);
+  }
+
+  .post-toc-link.active {
+    color: var(--primary);
+    background-color: var(--divider-soft);
+    font-weight: 600;
+  }
+}
+
+/* Scrollbar styling for TOC */
+.post-toc::-webkit-scrollbar {
+  width: 4px;
+}
+.post-toc::-webkit-scrollbar-track {
+  background: transparent;
+}
+.post-toc::-webkit-scrollbar-thumb {
+  background: var(--hairline);
+  border-radius: var(--rounded-pill);
+}
+.post-toc::-webkit-scrollbar-thumb:hover {
+  background: var(--ink-muted-48);
 }

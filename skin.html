@@ -225,6 +225,27 @@
             [##_article_rep_desc_##]
           </div>
 
+          <!-- Table of Contents (TOC) -->
+          <aside class="post-toc-wrap" style="display: none;">
+            <button type="button" class="toc-toggle-btn" aria-label="목차 열기">
+              <!-- TOC Icon -->
+              <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="21" y1="10" x2="7" y2="10"></line>
+                <line x1="21" y1="6" x2="3" y2="6"></line>
+                <line x1="21" y1="14" x2="3" y2="14"></line>
+                <line x1="21" y1="18" x2="7" y2="18"></line>
+                <circle cx="3" cy="6" r="1" fill="currentColor"></circle>
+                <circle cx="3" cy="10" r="1" fill="currentColor"></circle>
+                <circle cx="3" cy="14" r="1" fill="currentColor"></circle>
+                <circle cx="3" cy="18" r="1" fill="currentColor"></circle>
+              </svg>
+            </button>
+            <div class="post-toc">
+              <div class="post-toc-title">목차</div>
+              <ul class="post-toc-list"></ul>
+            </div>
+          </aside>
+
           <!-- Post Tags -->
           <s_tag_label>
             <div class="post-detail-tags">
@@ -438,6 +459,134 @@
   if (activePageNum) {
     activePageNum.classList.add('active');
   }
+
+  // Table of Contents (TOC) dynamic generation
+  (function() {
+    const postBody = document.querySelector('.post-detail-body');
+    if (!postBody) return;
+
+    // 티스토리 에디터의 제목 태그 h2, h3, h4 탐색
+    const headings = postBody.querySelectorAll('h2, h3, h4');
+    const tocWrap = document.querySelector('.post-toc-wrap');
+    const tocList = document.querySelector('.post-toc-list');
+    const tocBtn = document.querySelector('.toc-toggle-btn');
+    const tocPanel = document.querySelector('.post-toc');
+
+    if (!tocWrap || !tocList || headings.length === 0) return;
+
+    // 목차 표시 및 데이터 생성
+    tocWrap.style.display = 'block';
+
+    headings.forEach((heading, index) => {
+      // 고유 ID 생성 (없을 경우에만)
+      if (!heading.id) {
+        heading.id = `toc-heading-${index}`;
+      }
+
+      // 목록 아이템 생성
+      const li = document.createElement('li');
+      const level = heading.tagName.toLowerCase().charAt(1); // '2', '3', '4'
+      li.className = `post-toc-item level-${level}`;
+
+      const a = document.createElement('a');
+      a.className = 'post-toc-link';
+      a.href = `#${heading.id}`;
+      a.textContent = heading.textContent.trim();
+
+      // 스무스 스크롤 이동
+      a.addEventListener('click', (e) => {
+        e.preventDefault();
+        const target = document.getElementById(heading.id);
+        if (target) {
+          const offset = 80; // 상단 고정 헤더 네비게이션 높이 고려
+          const bodyRect = document.body.getBoundingClientRect().top;
+          const targetRect = target.getBoundingClientRect().top;
+          const targetPosition = targetRect - bodyRect;
+          const offsetPosition = targetPosition - offset;
+
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: 'smooth'
+          });
+
+          // 모바일 팝오버일 때 링크 클릭 시 닫기
+          if (window.innerWidth < 1400 && tocPanel.classList.contains('active')) {
+            tocPanel.classList.remove('active');
+            tocBtn.classList.remove('active');
+          }
+        }
+      });
+
+      li.appendChild(a);
+      tocList.appendChild(li);
+    });
+
+    // IntersectionObserver를 통한 현재 위치 하이라이트 기능
+    const tocLinks = document.querySelectorAll('.post-toc-link');
+    let activeLink = null;
+
+    const observerOptions = {
+      root: null,
+      rootMargin: '-80px 0px -60% 0px',
+      threshold: 0.1
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        const id = entry.target.getAttribute('id');
+        const link = document.querySelector(`.post-toc-link[href="#${id}"]`);
+        if (!link) return;
+
+        if (entry.isIntersecting) {
+          if (activeLink) activeLink.classList.remove('active');
+          link.classList.add('active');
+          activeLink = link;
+
+          // 데스크톱 사이드바에서 하이라이트된 링크로 TOC 컨테이너 내부 스크롤 조정
+          if (window.innerWidth >= 1400) {
+            const linkOffsetTop = link.offsetTop;
+            const tocHeight = tocPanel.clientHeight;
+            if (linkOffsetTop > tocPanel.scrollTop + tocHeight - 40 || linkOffsetTop < tocPanel.scrollTop) {
+              tocPanel.scrollTo({
+                top: linkOffsetTop - 40,
+                behavior: 'smooth'
+              });
+            }
+          }
+        }
+      });
+    }, observerOptions);
+
+    headings.forEach(heading => observer.observe(heading));
+
+    // 최상단으로 스크롤했을 때 첫 번째 아이템 활성화
+    window.addEventListener('scroll', () => {
+      if (window.scrollY < 100 && tocLinks.length > 0) {
+        if (activeLink) activeLink.classList.remove('active');
+        tocLinks[0].classList.add('active');
+        activeLink = tocLinks[0];
+      }
+    });
+
+    // 모바일/태블릿 플로팅 팝오버 토글 기능
+    if (tocBtn && tocPanel) {
+      tocBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const isOpen = tocPanel.classList.toggle('active');
+        tocBtn.classList.toggle('active', isOpen);
+      });
+
+      // 바깥 영역 클릭 시 패널 닫기
+      document.addEventListener('click', (e) => {
+        if (window.innerWidth < 1400 && tocPanel.classList.contains('active')) {
+          if (!tocPanel.contains(e.target) && !tocBtn.contains(e.target)) {
+            tocPanel.classList.remove('active');
+            tocBtn.classList.remove('active');
+          }
+        }
+      });
+    }
+  })();
 </script>
 </body>
 </html>
